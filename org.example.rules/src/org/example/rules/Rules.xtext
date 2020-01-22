@@ -1,0 +1,26 @@
+grammar org.example.rules.Rules with org.eclipse.xtext.common.Terminals
+
+generate model "http://www.example.org/rules/Rules"
+
+Model:
+	actions+=Action* &
+	rules+=Rule*;
+
+Action:
+	'action' name=ID;
+
+ActionRef:
+	node=[Action];
+
+Filter:
+	element=('from' | 'to' | 'subject') 'is' value=STRING;
+
+Rule:
+	'rule' name=ID '{'
+		'filters' '{'
+			filters+=Filter+
+		'}'
+		'actions' '{'
+			actions+=ActionRef+
+		'}'
+	'}';
